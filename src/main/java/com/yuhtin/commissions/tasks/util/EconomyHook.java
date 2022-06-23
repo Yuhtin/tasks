@@ -1,6 +1,6 @@
 package com.yuhtin.commissions.tasks.util;
 
-import com.yuhtin.quotes.moneyfarm.MoneyFarm;
+import com.yuhtin.commissions.tasks.TasksPlugin;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
@@ -14,7 +14,7 @@ public final class EconomyHook {
     public void init() {
         RegisteredServiceProvider<Economy> registration = Bukkit.getServicesManager().getRegistration(Economy.class);
         if (registration == null) {
-            MoneyFarm.getInstance().getLogger().severe("Não foi encontrado nenhum plugin de economia no servidor!");
+            TasksPlugin.getInstance().getLogger().severe("Não foi encontrado nenhum plugin de economia no servidor!");
         } else {
             economy = registration.getProvider();
         }
