@@ -7,19 +7,20 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Arrays;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class TasksDocumentParser implements DocumentParser<User> {
 
-    @Getter private static final TasksDocumentParser instance = new TasksDocumentParser();
+    @Getter
+    private static final TasksDocumentParser instance = new TasksDocumentParser();
 
     @Override
     public User parse(Document document) {
         String data = document.getString("data");
 
         User user = new User(document.getString("owner"));
-        for (String taskId : data.split("@")) {
-            user.getCompletedTasksIdList().add(taskId);
-        }
+        user.getCompletedTasksIdList().addAll(Arrays.asList(data.split(",")));
 
         return user;
     }
