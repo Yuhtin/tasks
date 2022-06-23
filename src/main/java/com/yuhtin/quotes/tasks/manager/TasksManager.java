@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 @Getter
 public class TasksManager {
 
-    private final TasksCache storageCache = new TasksCache();
+    private final TasksCache tasksCache = new TasksCache();
     private TasksDAO tasksDAO;
 
     public void init() {
@@ -30,11 +30,11 @@ public class TasksManager {
         tasksDAO.setSqlConnection(sql);
         tasksDAO.createTable();
 
-        storageCache.init();
+        tasksCache.init();
     }
 
     public User getByPlayer(Player player) {
-        User cached = storageCache.getCache().getOrDefault(player.getName(), null);
+        User cached = tasksCache.getCache().getOrDefault(player.getName(), null);
         if (cached != null) return cached;
 
         User farm = tasksDAO.find(player.getName());
@@ -43,12 +43,12 @@ public class TasksManager {
             tasksDAO.save(player.getName(), farm);
         }
 
-        storageCache.getCache().put(player.getName(), farm);
+        tasksCache.getCache().put(player.getName(), farm);
         return farm;
     }
 
     public void save() {
-        for (val entry : storageCache.getCache().entrySet()) {
+        for (val entry : tasksCache.getCache().entrySet()) {
             tasksDAO.save(entry.getKey(), entry.getValue());
         }
     }

@@ -12,6 +12,7 @@ tasks:
   conquista1:
     displayName: 'Tarefa #1'
     icon:
+      name: '&6Tarefa #1'
       id: 4108
       data: 0
       lore:

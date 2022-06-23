@@ -1,5 +1,6 @@
 package com.yuhtin.quotes.tasks.util;
 
+import com.yuhtin.quotes.tasks.TasksPlugin;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -41,6 +42,11 @@ public class ItemBuilder {
 
     public ItemBuilder changeItemMeta(Consumer<ItemMeta> consumer) {
         ItemMeta itemMeta = item.getItemMeta();
+        if (itemMeta == null) {
+            TasksPlugin.getInstance().getLogger().info("O item de id " + item.getTypeId() + " é inválido!");
+            return this;
+        }
+
         consumer.accept(itemMeta);
         item.setItemMeta(itemMeta);
         return this;

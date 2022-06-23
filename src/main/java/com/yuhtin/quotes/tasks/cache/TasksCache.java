@@ -22,6 +22,8 @@ public class TasksCache {
     private final List<Task> tasks = new ArrayList<>();
 
     public void init() {
+        TasksPlugin.getInstance().getLogger().info("Loading tasks...");
+
         FileConfiguration config = TasksPlugin.getInstance().getConfig();
         ConfigurationSection section = config.getConfigurationSection("tasks");
         for (String identifier : section.getKeys(false)) {
@@ -54,7 +56,8 @@ public class TasksCache {
                     .coinsCost(costsSection.getDouble("coins", 0))
                     .build();
 
-            this.tasks.add(task);
+            TasksPlugin.getInstance().getLogger().info("Added task " + task.getIdentifier());
+            tasks.add(task);
         }
     }
 
@@ -64,7 +67,7 @@ public class TasksCache {
                 section.getInt("data", 0)
         );
 
-        return builder.name(section.getString("displayName"))
+        return builder.name(section.getString("name", "Nothing"))
                 .setLore(section.getStringList("lore"))
                 .wrap();
     }

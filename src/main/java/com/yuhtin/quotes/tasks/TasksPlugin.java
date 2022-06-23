@@ -1,5 +1,6 @@
 package com.yuhtin.quotes.tasks;
 
+import com.henryfabio.minecraft.inventoryapi.manager.InventoryManager;
 import com.yuhtin.quotes.tasks.cache.TasksCache;
 import com.yuhtin.quotes.tasks.command.TasksCommand;
 import com.yuhtin.quotes.tasks.manager.TasksManager;
@@ -10,22 +11,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 @Getter
 public class TasksPlugin extends JavaPlugin {
 
-    private TasksCache tasksCache;
     private TasksManager tasksManager;
     private EconomyHook economyHook;
 
     @Override
-    public void onLoad() {
-        saveDefaultConfig();
-    }
-
-    @Override
     public void onEnable() {
+        saveDefaultConfig();
+        InventoryManager.enable(this);
+
         economyHook = new EconomyHook();
         economyHook.init();
-
-        tasksCache = new TasksCache();
-        tasksCache.init();
 
         tasksManager = new TasksManager();
         tasksManager.init();
