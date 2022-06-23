@@ -11,6 +11,7 @@ import java.util.List;
 public class Task {
 
     private final String identifier;
+    private final String displayName;
     private final ItemStack icon;
 
     // Reward list
