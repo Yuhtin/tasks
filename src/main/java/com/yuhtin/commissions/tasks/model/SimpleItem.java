@@ -2,14 +2,13 @@ package com.yuhtin.commissions.tasks.model;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.bukkit.inventory.ItemStack;
 
 @Builder
 @Getter
 public class SimpleItem {
 
-    private final String customName;
-    private final int id;
-    private final int data;
+    private final ItemStack item;
     private final int quantity;
 
 }
