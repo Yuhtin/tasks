@@ -1,12 +1,13 @@
 package com.yuhtin.commissions.tasks.cache;
 
 import com.yuhtin.commissions.tasks.TasksPlugin;
+import com.yuhtin.commissions.tasks.model.SimpleItem;
 import com.yuhtin.commissions.tasks.model.Task;
 import com.yuhtin.commissions.tasks.model.User;
+import com.yuhtin.commissions.tasks.util.ColorUtil;
 import com.yuhtin.commissions.tasks.util.ItemBuilder;
 import lombok.Getter;
 import lombok.val;
-import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -25,14 +26,29 @@ public class TasksCache {
         FileConfiguration config = TasksPlugin.getInstance().getConfig();
         ConfigurationSection section = config.getConfigurationSection("tasks");
         for (String identifier : section.getKeys(false)) {
+            List<SimpleItem> simpleItems = new ArrayList<>();
+
             ConfigurationSection taskSection = section.getConfigurationSection(identifier);
             ConfigurationSection costsSection = taskSection.getConfigurationSection("costs");
+            ConfigurationSection itemsSection = costsSection.getConfigurationSection("items");
+
+            for (String key : itemsSection.getKeys(false)) {
+                ConfigurationSection itemSection = itemsSection.getConfigurationSection(key);
+
+                simpleItems.add(SimpleItem.builder()
+                        .customName(ColorUtil.colored(itemSection.getString("name", "")))
+                        .id(itemSection.getInt("id", 1))
+                        .data(itemSection.getInt("data", 0))
+                        .quantity(itemSection.getInt("quantity", 1))
+                        .build()
+                );
+            }
 
             Task task = Task.builder()
                     .identifier(identifier)
+                    .itemCostList(simpleItems)
                     .icon(parse(taskSection.getConfigurationSection("icon")))
                     .rewardCommandsList(taskSection.getStringList("rewards"))
-                    .itemCostList()
                     .coinsCost(costsSection.getDouble("coins", 0))
                     .build();
 
