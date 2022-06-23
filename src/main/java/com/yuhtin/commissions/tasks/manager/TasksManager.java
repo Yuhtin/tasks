@@ -1,5 +1,6 @@
 package com.yuhtin.commissions.tasks.manager;
 
+import com.yuhtin.commissions.tasks.TasksPlugin;
 import com.yuhtin.commissions.tasks.cache.TasksCache;
 import com.yuhtin.commissions.tasks.model.User;
 import com.yuhtin.commissions.tasks.sql.TasksDAO;
@@ -18,8 +19,8 @@ public class TasksManager {
     private final TasksCache storageCache = new TasksCache();
     private TasksDAO tasksDAO;
 
-    public void init(JavaPlugin plugin) {
-        ConfigurationSection connectionSection = plugin.getConfig().getConfigurationSection("connection");
+    public void init() {
+        ConfigurationSection connectionSection = TasksPlugin.getInstance().getConfig().getConfigurationSection("connection");
         SQLConnection sql = new MySQLConnection();
         if (!sql.configure(connectionSection.getConfigurationSection("mysql"))) {
             sql = new SQLiteConnection();
