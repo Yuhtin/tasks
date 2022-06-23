@@ -2,6 +2,7 @@ package com.yuhtin.commissions.tasks.util;
 
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -42,6 +43,13 @@ public class ItemBuilder {
         ItemMeta itemMeta = item.getItemMeta();
         consumer.accept(itemMeta);
         item.setItemMeta(itemMeta);
+        return this;
+    }
+
+    public ItemBuilder glow(boolean glow) {
+        if (glow) item.addUnsafeEnchantment(Enchantment.DURABILITY, 1);
+        else item.getEnchantments().keySet().forEach(item::removeEnchantment);
+
         return this;
     }
 
