@@ -4,7 +4,6 @@ import com.yuhtin.commissions.tasks.TasksPlugin;
 import com.yuhtin.commissions.tasks.model.SimpleItem;
 import com.yuhtin.commissions.tasks.model.Task;
 import com.yuhtin.commissions.tasks.model.User;
-import com.yuhtin.commissions.tasks.util.ColorUtil;
 import com.yuhtin.commissions.tasks.util.ItemBuilder;
 import lombok.Getter;
 import lombok.val;
@@ -35,10 +34,12 @@ public class TasksCache {
             for (String key : itemsSection.getKeys(false)) {
                 ConfigurationSection itemSection = itemsSection.getConfigurationSection(key);
 
+                ItemStack item = new ItemBuilder(itemSection.getInt("id", 1), itemSection.getInt("data", 0))
+                        .name(itemSection.getString("name", "Nothing"))
+                        .wrap();
+
                 simpleItems.add(SimpleItem.builder()
-                        .customName(ColorUtil.colored(itemSection.getString("name", "")))
-                        .id(itemSection.getInt("id", 1))
-                        .data(itemSection.getInt("data", 0))
+                        .item(item)
                         .quantity(itemSection.getInt("quantity", 1))
                         .build()
                 );
@@ -46,6 +47,7 @@ public class TasksCache {
 
             Task task = Task.builder()
                     .identifier(identifier)
+                    .displayName(taskSection.getString("displayName", "Tarefa #1"))
                     .itemCostList(simpleItems)
                     .icon(parse(taskSection.getConfigurationSection("icon")))
                     .rewardCommandsList(taskSection.getStringList("rewards"))
