@@ -1,5 +1,6 @@
 tasks:
   conquista1:
+    displayName: 'Tarefa #1'
     icon:
       id: 4108
       data: 0
