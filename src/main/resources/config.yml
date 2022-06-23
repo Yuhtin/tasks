@@ -1,0 +1,26 @@
+tasks:
+  conquista1:
+    icon:
+      id: 4108
+      data: 0
+      lore:
+        - '&7Requisitos:'
+        - ''
+        - ' &e- &a5x &fSubstancia Básica'
+        - ' &e- &a10x &fSubstancia Difícil'
+    rewards:
+      - 'money add %player% 1'
+      - 'broadcast %player% completou a Conquista 1'
+    costs:
+      coins: 1600000
+      items:
+        subsBasic:
+          name: '&b&lSubstancia Basica'
+          id: 1
+          data: 0
+          amount: 5
+        subsHard:
+          name: '&c&lSubstancia Dificil'
+          id: 40
+          data: 0
+          amount: 10

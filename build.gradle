@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+
+    id 'com.github.johnrengelman.shadow' version '5.0.0'
+    id 'net.minecrell.plugin-yml.bukkit' version '0.3.0'
+}
+
+group 'com.yuhtin.quotes'
+version '1.0-SNAPSHOT'
+
+tasks.build.dependsOn('shadowJar')
+
+repositories {
+    mavenCentral()
+
+    maven { url 'https://jitpack.io' }
+
+    maven { url = 'https://maven.elmakers.com/repository/' }
+
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.7.10-R0.1-SNAPSHOT'
+    compileOnly "com.github.MilkBowl:VaultAPI:1.7"
+
+    implementation 'com.github.HenryFabio:inventory-api:2.0.3'
+    implementation 'com.zaxxer:HikariCP:3.4.5'
+
+    def lombok = 'org.projectlombok:lombok:1.18.22'
+    compileOnly lombok
+    annotationProcessor lombok
+}
+
+bukkit {
+    main = 'com.yuhtin.quotes.tasks.TasksPlugin'
+    authors = ['Yuhtin']
+    version = "${project.version}"
+    commands {
+        tasks {
+            aliases = ['task']
+        }
+    }
+}
+
+shadowJar {
+    archiveName("${project.name}-${project.version}.jar")
+
+    relocate 'com.henryfabio.minecraft.inventoryapi', 'com.yuhtin.quotes.tasks.libs.inventoryapi'
+    relocate 'com.zaxxer.hikari', 'com.yuhtin.quotes.tasks.libs.hikari'
+}
+
+compileJava {
+    options.encoding = "UTF-8"
+
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+}
