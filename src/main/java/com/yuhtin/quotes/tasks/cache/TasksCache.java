@@ -42,7 +42,7 @@ public class TasksCache {
 
                 simpleItems.add(SimpleItem.builder()
                         .item(item)
-                        .quantity(itemSection.getInt("quantity", 1))
+                        .quantity(itemSection.getInt("amount", 1))
                         .build()
                 );
             }

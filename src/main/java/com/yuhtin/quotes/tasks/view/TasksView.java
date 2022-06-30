@@ -121,13 +121,13 @@ public class TasksView extends PagedInventory {
                 continue;
 
             if (item.getAmount() > count) {
-                item.setAmount(item.getAmount() - count);
+                if (consume) item.setAmount(item.getAmount() - count);
                 count = 0;
 
                 break;
             } else {
                 count -= item.getAmount();
-                item.setAmount(0);
+                if (consume) item.setAmount(0);
             }
         }
 
